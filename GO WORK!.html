@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Go-Work</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-image: url('https://geng.9letu.com/wp-content/uploads/2024/08/1723643539-nongchangzhu.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            height: 100vh;
+        }
+        .big-box {
+            width: 95%;
+            max-width: 600px;
+            background-color: white;
+            margin: 5% auto;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            font-weight: bolder;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .small-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .what-work-for {
+            border-radius: 10px;
+            border: 1px solid black;
+            padding: 0 10px;
+            height: 40px;
+            flex: 1;
+        }
+        .go-work-button {
+            border-radius: 10px;
+            border: 1px solid black;
+            background-color: #4CAF50;
+            color: white;
+            height: 40px;
+            padding: 0 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .todo-list {
+            list-style: none;
+            padding: 0;
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .todo-item:last-child {
+            border-bottom: none;
+        }
+        .todo-item.completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .todo-item button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="big-box">
+        <div class="title">Go-Work</div>
+        <div class="small-box">
+            <input class="what-work-for" type="text" placeholder="Add A New Mission"/>
+            <button class="go-work-button" onclick="addWork()">Add Mission</button>
+        </div>
+        <ul class="todo-list" id="todo-list"></ul>
+    </div>
+
+    <script>
+        const todoList = document.getElementById('todo-list');
+
+        function addTask() {
+            const input = document.querySelector('.what-work-for');
+            const taskText = input.value.trim();
+
+            if (taskText === '') {
+                alert('Please enter a task!');
+                return;
+            }
+
+            const listItem = document.createElement('li');
+            listItem.classList.add('todo-item');
+            listItem.innerHTML = `
+                <span>${taskText}</span>
+                <button onclick="toggleTask(this)">✔</button>
+                <button onclick="deleteTask(this)">❌</button>
+            `;
+
+            todoList.appendChild(listItem);
+            input.value = ''; 
+        }
+
+        function toggleTask(button) {
+            const listItem = button.parentElement;
+            listItem.classList.toggle('completed');
+        }
+
+        function deleteTask(button) {
+            const listItem = button.parentElement;
+            todoList.removeChild(listItem);
+        }
+    </script>
+</body>
+</html>
