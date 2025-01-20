@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic To-Do List</title>
+    <style>
+        body {
+            background: linear-gradient(75deg, purple, rgb(98, 0, 255), blue);
+            margin: 0;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .big-box {
+            width: 95%;
+            max-width: 600px; /* 限制最大宽度 */
+            background-color: white;
+            margin: 5% auto; /* 垂直和水平居中 */
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            font-weight: bolder;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .small-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .what-work-for {
+            border-radius: 10px;
+            border: 1px solid black;
+            padding: 0 10px;
+            height: 40px;
+            flex: 1; /* 占据剩余空间 */
+        }
+        .go-work-button {
+            border-radius: 10px;
+            border: 1px solid black;
+            background-color: #4CAF50;
+            color: white;
+            height: 40px;
+            padding: 0 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .todo-list {
+            list-style: none;
+            padding: 0;
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .todo-item:last-child {
+            border-bottom: none;
+        }
+        .todo-item.completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .todo-item button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="big-box">
+        <div class="title">TO-DO LIST</div>
+        <div class="small-box">
+            <input class="what-work-for" type="text" placeholder="Add a new task"/>
+            <button class="go-work-button" onclick="addTask()">Add Task</button>
+        </div>
+        <ul class="todo-list" id="todo-list"></ul>
+    </div>
+
+    <script>
+        // 获取任务列表容器
+        const todoList = document.getElementById('todo-list');
+
+        // 添加任务
+        function addTask() {
+            const input = document.querySelector('.what-work-for');
+            const taskText = input.value.trim();
+
+            if (taskText === '') {
+                alert('Please enter a task!');
+                return;
+            }
+
+            // 创建新的任务项
+            const listItem = document.createElement('li');
+            listItem.classList.add('todo-item');
+            listItem.innerHTML = `
+                <span>${taskText}</span>
+                <button onclick="toggleTask(this)">✔</button>
+                <button onclick="deleteTask(this)">❌</button>
+            `;
+
+            // 添加到任务列表
+            todoList.appendChild(listItem);
+            input.value = ''; // 清空输入框
+        }
+
+        // 划掉任务
+        function toggleTask(button) {
+            const listItem = button.parentElement;
+            listItem.classList.toggle('completed');
+        }
+
+        // 删除任务
+        function deleteTask(button) {
+            const listItem = button.parentElement;
+            todoList.removeChild(listItem);
+        }
+    </script>
+</body>
+</html>
